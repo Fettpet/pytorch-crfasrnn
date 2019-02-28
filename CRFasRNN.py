@@ -19,8 +19,7 @@ class CRFasRNN(nn.Module):
         theta_alpha,
         theta_beta,
         theta_gamma,
-        gpu_rnn,
-        train_mode
+        gpu_rnn
     ):
         """
 
@@ -43,11 +42,6 @@ class CRFasRNN(nn.Module):
         self.nb_iterations = nb_iterations
         self.nb_classes = nb_classes
         self.nb_input_channels = nb_input_channels
-
-        # check whether cnn should be updated
-        if train_mode.lower() == "crf":
-            for param in self.network.parameters():
-                param.requires_grad = False
 
         # These are the elements for the filtering
         self.theta_alpha = theta_alpha
