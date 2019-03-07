@@ -22,7 +22,7 @@ SOFTWARE.*/
 #include "PermutohedralLatticeCPU.h"
 #include "LatticeFilter.hpp"
 
-#include <torch/torch.h>
+#include <torch/extension.h>
 
 
 at::Tensor
@@ -74,7 +74,7 @@ LatticeFilter_calculate(
 
         // Allocate kernel positions and calculate them
 
-        at::Tensor positions = at::zeros(input_tensor.type(), {batch_size * num_super_pixels * pd} );
+        at::Tensor positions = at::zeros({batch_size * num_super_pixels * pd}, input_tensor.type() );
         at::Tensor output_tensor = at::zeros_like(input_tensor);
         for(int b=0; b < batch_size; b++){
 

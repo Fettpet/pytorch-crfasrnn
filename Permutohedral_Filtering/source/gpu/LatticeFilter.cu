@@ -20,7 +20,7 @@ SOFTWARE.*/
 
 //#include "LatticeFilterKernel.h"
 
-#include <torch/torch.h>
+#include <torch/extension.h>
 
 #include "PermutohedralLatticeGPU.cuh"
 #include "DeviceMemoryAllocator.h"
@@ -186,7 +186,10 @@ LatticeFilter_calculate_gpu(
 
     // Allocate kernel positions and calculate them
 
-    at::Tensor positions = at::zeros(input_tensor.type(),{batch_size * num_super_pixels * pd} );
+    at::Tensor positions = at::zeros(
+        {batch_size * num_super_pixels * pd},
+        input_tensor.type()
+    );
     at::Tensor output_tensor = at::zeros_like(input_tensor);
 
     auto in_ptr = input_tensor.data<float>();
@@ -351,7 +354,7 @@ LatticeFilter_calculate_gpu(
                     num_super_pixels,
                     backward
                 );
-            4. recomplie  with setup_Permutohedral.py
+            4. recomplie  with setup.py
             */
         std::cerr << "latticeFilterGPU with pd=" << pd << " and vd=" << vd << " doesnt exists. Pls add this in"
                   << " the file latticeFilter.cu. This is nessacary for an efficent GPU implementation" <<std::endl;
